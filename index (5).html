@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title id="page-title">Zael Voss — Web Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--bg4:#1f1f1f;--text:#f0ede6;--muted:#666;--muted2:#999;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--accent:#ff4d00;--accent2:#7c3aed;--accent3:#00d4aa;--card:#141414}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none}
+a{text-decoration:none;color:inherit}button{cursor:none;font-family:'DM Sans',sans-serif;border:none}input,textarea{font-family:'DM Sans',sans-serif}
+#cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(255,77,0,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;border-bottom:1px solid var(--border);background:rgba(10,10,10,0.88);backdrop-filter:blur(24px)}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:1px}.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:32px}.nav-links a{font-size:13px;color:var(--muted2);transition:color .2s}.nav-links a:hover{color:var(--text)}
+.hire-btn{padding:8px 20px;background:var(--accent);border-radius:100px;font-size:13px;color:#fff;font-weight:500;transition:all .2s;display:inline-block}
+.hire-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,77,0,.32)}
+.hero{min-height:100vh;padding:140px 48px 80px;display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:center;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:-150px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(255,77,0,.055) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero-glow2{position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(124,58,237,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero-left{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,77,0,.09);border:1px solid rgba(255,77,0,.2);color:var(--accent);font-size:11px;padding:6px 14px;border-radius:100px;margin-bottom:28px;letter-spacing:.6px;font-weight:500}
+.badge-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(52px,7vw,90px);font-weight:800;line-height:.93;letter-spacing:-3px;margin-bottom:10px}
+.hero-name .outline{-webkit-text-stroke:1.5px var(--text);color:transparent;display:block}
+.hero-role{font-family:'Syne',sans-serif;font-size:clamp(18px,2.2vw,26px);font-weight:700;color:var(--accent);margin-bottom:18px;letter-spacing:-.5px}
+.hero-desc{font-size:15px;line-height:1.75;color:var(--muted2);max-width:430px;margin-bottom:34px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-p{padding:12px 26px;background:var(--accent);color:#fff;border-radius:100px;font-size:14px;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,77,0,.35)}
+.btn-s{padding:12px 26px;border:1px solid var(--border2);color:var(--text);border-radius:100px;font-size:14px;background:transparent;transition:all .2s}.btn-s:hover{border-color:var(--text)}
+.hero-right{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px}
+.profile-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px;position:relative;overflow:hidden}
+.profile-card::after{content:'';position:absolute;top:-80px;right:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(255,77,0,.1),transparent 70%);pointer-events:none}
+.avatar{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:12px;overflow:hidden;flex-shrink:0}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.profile-card h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:3px}
+.profile-card .role-tag{font-size:12px;color:var(--muted2);margin-bottom:14px}
+.stars{color:#f5c518;font-size:12px;letter-spacing:2px;margin-bottom:2px}.rating-sub{font-size:11px;color:var(--muted)}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;transition:border-color .2s,transform .2s}
+.stat:hover{border-color:var(--accent);transform:translateY(-2px)}
+.stat-n{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;line-height:1}
+.stat-n.o{color:var(--accent)}.stat-n.p{color:var(--accent2)}.stat-n.g{color:var(--accent3)}.stat-l{font-size:11px;color:var(--muted);margin-top:4px}
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:11px 0;background:var(--bg2)}
+.marquee-track{display:flex;gap:36px;animation:mscroll 38s linear infinite;white-space:nowrap}
+@keyframes mscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.m-item{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.m-item span{color:var(--accent);font-size:14px}
+.sec{padding:88px 48px}
+.sec-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(28px,3.8vw,46px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:52px;max-width:520px}
+.services-list{display:flex;flex-direction:column}
+.svc-row{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--border);transition:padding-left .2s;gap:20px}
+.svc-row:first-child{border-top:1px solid var(--border)}.svc-row:hover{padding-left:14px}.svc-row:hover .svc-name{color:var(--accent)}
+.svc-name{font-family:'Syne',sans-serif;font-size:clamp(18px,2.5vw,30px);font-weight:700;letter-spacing:-1px;transition:color .2s}
+.svc-right{display:flex;align-items:center;gap:18px}.svc-desc{font-size:13px;color:var(--muted2);max-width:240px;line-height:1.5}
+.svc-arrow{width:38px;height:38px;border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;flex-shrink:0}
+.svc-row:hover .svc-arrow{background:var(--accent);border-color:var(--accent)}
+.projects-sec{padding:88px 48px;background:var(--bg2)}
+.proj-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px}.proj-header .sec-title{margin-bottom:0}
+.view-all-btn{font-size:12px;color:var(--muted2);border:1px solid var(--border2);padding:8px 18px;border-radius:100px;background:transparent;transition:all .2s}
+.view-all-btn:hover{border-color:var(--accent);color:var(--accent)}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:all .3s;position:relative}
+.proj-card:hover{transform:translateY(-4px);border-color:rgba(255,77,0,.22)}.proj-card.featured{grid-column:span 2}
+.proj-thumb{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-size:48px}
+.proj-card.featured .proj-thumb{aspect-ratio:21/9;font-size:64px}
+.proj-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.proj-card:hover .proj-overlay{opacity:1}
+.view-proj-btn{padding:10px 22px;background:#fff;color:#000;border-radius:100px;font-size:13px;font-weight:500;border:none;transition:transform .15s}.view-proj-btn:hover{transform:scale(1.04)}
+.proj-body{padding:20px}.proj-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.ptag{font-size:10px;padding:3px 10px;border-radius:100px;background:var(--bg3);color:var(--muted2);border:1px solid var(--border)}
+.ptag.hot{background:rgba(255,77,0,.1);color:var(--accent);border-color:rgba(255,77,0,.2)}
+.proj-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.4px;margin-bottom:6px}.proj-desc{font-size:13px;color:var(--muted2);line-height:1.55}
+.proj-foot{padding:13px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.proj-year{font-size:11px;color:var(--muted)}.proj-link{font-size:12px;color:var(--accent)}
+.about-sec{padding:88px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-img-frame{aspect-ratio:4/5;border-radius:20px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:72px;position:relative;overflow:hidden}
+.about-img-frame img{width:100%;height:100%;object-fit:cover}
+.about-badge{position:absolute;bottom:18px;left:18px;background:var(--accent);color:#fff;padding:7px 14px;border-radius:100px;font-size:11px;font-weight:500;font-family:'Syne',sans-serif}
+.about-title{font-family:'Syne',sans-serif;font-size:clamp(22px,2.8vw,34px);font-weight:700;letter-spacing:-1px;line-height:1.2;margin-bottom:18px}
+.about-title em{font-style:normal;color:var(--accent)}.about-body{font-size:15px;line-height:1.8;color:var(--muted2);margin-bottom:26px}
+.skills-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.skills-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:28px}
+.chip{padding:5px 13px;border:1px solid var(--border);border-radius:100px;font-size:12px;color:var(--muted2);background:var(--bg3);transition:all .2s}.chip:hover{border-color:var(--accent);color:var(--accent)}
+.contact-sec{padding:88px 48px;background:var(--bg2);text-align:center}
+.contact-title{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,60px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:14px}.contact-title span{color:var(--accent)}
+.contact-sub{font-size:15px;color:var(--muted2);margin-bottom:40px}
+.contact-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.socials{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.s-pill{display:flex;align-items:center;gap:7px;padding:8px 16px;border:1px solid var(--border2);border-radius:100px;font-size:12px;color:var(--muted2);background:var(--card);transition:all .2s}.s-pill:hover{border-color:var(--accent);color:var(--text)}
+footer{padding:22px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:'Syne',sans-serif;font-size:13px;font-weight:700}.footer-logo span{color:var(--accent)}
+.footer-r{font-size:12px;color:var(--muted)}
+
+/* FULL-PAGE PROJECT DETAIL */
+.detail-overlay{position:fixed;inset:0;background:var(--bg);z-index:800;opacity:0;pointer-events:none;transition:opacity .35s;overflow-y:auto}
+.detail-overlay.open{opacity:1;pointer-events:all}
+.detail-page{min-height:100vh;max-width:1100px;margin:0 auto;padding:0 48px 80px}
+.detail-topbar{display:flex;align-items:center;justify-content:space-between;padding:24px 0;margin-bottom:10px;position:sticky;top:0;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
+.back-btn{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted2);background:none;border:none;transition:color .2s;padding:0}.back-btn:hover{color:var(--text)}
+.close-x{width:34px;height:34px;border-radius:50%;border:1px solid var(--border2);background:none;color:var(--muted2);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}.close-x:hover{border-color:var(--accent);color:var(--accent)}
+.dp-hero{width:100%;aspect-ratio:21/9;border-radius:20px;overflow:hidden;margin-bottom:40px;display:flex;align-items:center;justify-content:center;font-size:100px;border:1px solid var(--border);position:relative}
+.dp-hero img{width:100%;height:100%;object-fit:cover}
+.dp-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 55%)}
+.dp-hero-chips{position:absolute;bottom:22px;left:28px;display:flex;gap:7px;flex-wrap:wrap}
+.dp-layout{display:grid;grid-template-columns:1fr 300px;gap:52px;align-items:start}
+.dp-sidebar{position:sticky;top:100px;display:flex;flex-direction:column;gap:14px}
+.dp-title{font-family:'Syne',sans-serif;font-size:clamp(34px,4.5vw,56px);font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:14px}
+.dp-meta{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;align-items:center}
+.dp-meta-chip{font-size:11px;padding:4px 12px;border-radius:100px;border:1px solid var(--border2);color:var(--muted2)}
+.dp-desc{font-size:16px;line-height:1.85;color:var(--muted2);margin-bottom:36px}
+.dp-section-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;margin-top:36px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.dp-features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.feat-item{padding:16px 18px;background:var(--card);border-radius:14px;border:1px solid var(--border);transition:border-color .2s}.feat-item:hover{border-color:rgba(255,77,0,.3)}
+.feat-num{font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:var(--accent);opacity:.5;margin-bottom:8px}
+.feat-body strong{display:block;font-size:13px;font-weight:600;margin-bottom:4px}.feat-body small{font-size:12px;color:var(--muted2);line-height:1.5}
+.dp-imgs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:10px}
+.d-img-sm{aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--border);cursor:zoom-in;transition:transform .2s}.d-img-sm:hover{transform:scale(1.02)}.d-img-sm img{width:100%;height:100%;object-fit:cover}
+.dp-tech{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.dp-actions{display:flex;flex-direction:column;gap:10px}
+.dp-action-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;transition:all .2s;text-align:center}
+.dp-action-btn.primary{background:var(--accent);color:#fff}.dp-action-btn.primary:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(255,77,0,.32)}
+.dp-action-btn.secondary{border:1px solid var(--border2);color:var(--text);background:transparent}.dp-action-btn.secondary:hover{border-color:var(--text)}
+.dp-info-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+.dp-info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}.dp-info-row:last-child{border:none}
+.dp-info-row .label{color:var(--muted2)}.dp-info-row .val{font-weight:500;color:var(--text)}
+.dp-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:48px}
+.dp-nav-card{padding:18px 22px;background:var(--card);border-radius:14px;border:1px solid var(--border);transition:border-color .2s;cursor:pointer}.dp-nav-card:hover{border-color:var(--accent)}
+.dp-nav-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}.dp-nav-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:1200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.lightbox.open{display:flex}.lightbox img{max-width:90vw;max-height:90vh;border-radius:12px;object-fit:contain}
+.lightbox-close{position:absolute;top:20px;right:24px;color:#fff;font-size:28px;background:none;border:none;opacity:.7;cursor:pointer}.lightbox-close:hover{opacity:1}
+
+/* ALL PROJECTS */
+.all-overlay{position:fixed;inset:0;background:var(--bg);z-index:700;transform:translateY(100%);transition:transform .45s cubic-bezier(.16,1,.3,1);overflow-y:auto}
+.all-overlay.open{transform:translateY(0)}
+.all-head{padding:28px 48px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg);z-index:2}
+.all-head h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-1px}
+.all-body{padding:40px 48px}.all-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}.reveal.vis{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:14px 20px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:110px 20px 60px;gap:36px}.hero-right{display:none}
+  .sec,.projects-sec,.contact-sec{padding:64px 20px}
+  .about-sec{grid-template-columns:1fr;padding:64px 20px;gap:36px}.about-img-wrap{display:none}
+  .proj-grid{grid-template-columns:1fr}.proj-card.featured{grid-column:span 1}
+  footer{padding:18px 20px;flex-direction:column;gap:6px;text-align:center}
+  .all-body{padding:20px}.all-grid{grid-template-columns:1fr 1fr}
+  .detail-page{padding:0 20px 60px}.dp-layout{grid-template-columns:1fr}.dp-sidebar{position:static}
+  .dp-features{grid-template-columns:1fr}.dp-imgs-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div><div id="cursor-ring"></div>
+
+<nav>
+  <div class="nav-logo" id="nav-logo">Z<span>.</span>V</div>
+  <div class="nav-links">
+    <a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="#contact" class="hire-btn">Say hi ↗</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-glow"></div><div class="hero-glow2"></div>
+  <div class="hero-left reveal">
+    <div class="hero-badge"><span class="badge-dot"></span>Available for projects · 2025</div>
+    <h1 class="hero-name" id="hero-name-el"><span id="hero-name-l1" style="display:block">Zael</span><span id="hero-name-l2" style="display:none"></span><span class="outline" id="hero-name-l3" style="display:block">Voss.</span></h1>
+    <div class="hero-role" id="hero-role">Web Developer ✦</div>
+    <p class="hero-desc" id="hero-desc">I build websites — clean, bold, and full of personality. Crafting digital experiences with precision and creative flair.</p>
+    <div class="hero-ctas">
+      <button class="btn-p" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">See my work ↓</button>
+      <button class="btn-s" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Let's connect</button>
+    </div>
+  </div>
+  <div class="hero-right reveal" style="transition-delay:.15s">
+    <div class="profile-card">
+      <div class="avatar" id="hero-avatar"><span id="avatar-txt">Z</span><img id="avatar-img" src="" style="display:none"/></div>
+      <h3 id="profile-name">Zael Voss</h3>
+      <div class="role-tag" id="profile-role-tag">Web Developer · UI Designer · Creative Coder</div>
+      <div class="stars">★★★★★</div>
+      <div class="rating-sub">Open to collabs · Let's build something</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n o" id="s1">0</div><div class="stat-l">Projects</div></div>
+      <div class="stat"><div class="stat-n p" id="s2">∞</div><div class="stat-l">Creativity</div></div>
+      <div class="stat"><div class="stat-n g" id="s3">100%</div><div class="stat-l">Passion</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE — expanded -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="m-item">HTML <span>✦</span></div><div class="m-item">CSS <span>✦</span></div>
+    <div class="m-item">JavaScript <span>✦</span></div><div class="m-item">React <span>✦</span></div>
+    <div class="m-item">Next.js <span>✦</span></div><div class="m-item">Node.js <span>✦</span></div>
+    <div class="m-item">Flask <span>✦</span></div><div class="m-item">Java <span>✦</span></div>
+    <div class="m-item">Python <span>✦</span></div><div class="m-item">MongoDB <span>✦</span></div>
+    <div class="m-item">PostgreSQL <span>✦</span></div><div class="m-item">Supabase <span>✦</span></div>
+    <div class="m-item">Tailwind CSS <span>✦</span></div><div class="m-item">TypeScript <span>✦</span></div>
+    <div class="m-item">UI Design <span>✦</span></div><div class="m-item">Figma <span>✦</span></div>
+    <div class="m-item">Claude AI <span>✦</span></div><div class="m-item">Animations <span>✦</span></div>
+    <div class="m-item">REST APIs <span>✦</span></div><div class="m-item">Git <span>✦</span></div>
+    <!-- duplicate for loop -->
+    <div class="m-item">HTML <span>✦</span></div><div class="m-item">CSS <span>✦</span></div>
+    <div class="m-item">JavaScript <span>✦</span></div><div class="m-item">React <span>✦</span></div>
+    <div class="m-item">Next.js <span>✦</span></div><div class="m-item">Node.js <span>✦</span></div>
+    <div class="m-item">Flask <span>✦</span></div><div class="m-item">Java <span>✦</span></div>
+    <div class="m-item">Python <span>✦</span></div><div class="m-item">MongoDB <span>✦</span></div>
+    <div class="m-item">PostgreSQL <span>✦</span></div><div class="m-item">Supabase <span>✦</span></div>
+    <div class="m-item">Tailwind CSS <span>✦</span></div><div class="m-item">TypeScript <span>✦</span></div>
+    <div class="m-item">UI Design <span>✦</span></div><div class="m-item">Figma <span>✦</span></div>
+    <div class="m-item">Claude AI <span>✦</span></div><div class="m-item">Animations <span>✦</span></div>
+    <div class="m-item">REST APIs <span>✦</span></div><div class="m-item">Git <span>✦</span></div>
+  </div>
+</div>
+
+<section class="sec" id="services">
+  <div class="sec-label reveal">What I build</div>
+  <h2 class="sec-title reveal">Things I love making.</h2>
+  <div class="services-list" id="services-list"></div>
+</section>
+
+<section class="projects-sec" id="work">
+  <div class="proj-header reveal">
+    <div>
+      <div class="sec-label">Selected work</div>
+      <h2 class="sec-title">Latest projects.</h2>
+    </div>
+    <button class="view-all-btn" onclick="openAll()">View all projects →</button>
+  </div>
+  <div class="proj-grid" id="proj-grid"></div>
+</section>
+
+<section class="about-sec" id="about">
+  <div class="about-img-wrap reveal">
+    <div class="about-img-frame" id="about-frame">
+      <span id="about-emoji">👨‍💻</span>
+      <img id="about-img" src="" style="display:none;width:100%;height:100%;object-fit:cover"/>
+      <div class="about-badge">Web Developer ✦</div>
+    </div>
+  </div>
+  <div>
+    <div class="sec-label reveal">About me</div>
+    <h2 class="about-title reveal">I code for the <em>love of it.</em></h2>
+    <p class="about-body reveal" id="about-bio">Hey! I'm Zael — a self-taught web developer who builds things just because it's fun. No fancy CS degree, no corporate job hunt. Just me, a laptop, and a lot of late-night coding sessions.</p>
+    <div class="skills-label reveal">Tools I work with</div>
+    <div class="skills-chips reveal" id="skills-chips"></div>
+  </div>
+</section>
+
+<section class="contact-sec" id="contact">
+  <div class="sec-label reveal" style="display:inline-block">Get in touch</div>
+  <h2 class="contact-title reveal">Wanna build something<br><span>together?</span></h2>
+  <p class="contact-sub reveal" id="contact-sub">Always down for fun side projects, collabs, or just talking about cool websites.</p>
+  <div class="contact-btns reveal">
+    <button class="btn-p" onclick="toggleForm()">Send me a message ↗</button>
+  </div>
+  <div id="cf-wrap" style="display:none;max-width:480px;margin:0 auto 40px;text-align:left">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+      <input id="cf-name" placeholder="Your name" style="background:#141414;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;color:#f0ede6;font-size:14px;outline:none;font-family:'DM Sans',sans-serif;width:100%;transition:border-color .2s"/>
+      <input id="cf-email" placeholder="Your email" type="email" style="background:#141414;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;color:#f0ede6;font-size:14px;outline:none;font-family:'DM Sans',sans-serif;width:100%;transition:border-color .2s"/>
+      <textarea id="cf-msg" placeholder="What's on your mind?" rows="4" style="background:#141414;border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;color:#f0ede6;font-size:14px;outline:none;font-family:'DM Sans',sans-serif;width:100%;resize:vertical;line-height:1.6"></textarea>
+      <button id="cf-btn" onclick="submitContact()" style="padding:13px;background:#ff4d00;border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:600;font-family:'Syne',sans-serif">Send message ↗</button>
+    </div>
+  </div>
+  <div class="socials reveal" id="socials-row"></div>
+</section>
+
+<footer>
+  <div class="footer-logo" id="footer-logo">Zael<span>.</span> Voss</div>
+  <div class="footer-r">© 2025 · Web Developer</div>
+</footer>
+
+<!-- FULL-PAGE PROJECT DETAIL -->
+<div class="detail-overlay" id="det-overlay">
+  <div class="detail-page">
+    <div class="detail-topbar">
+      <button class="back-btn" onclick="closeDetail()">← Back to projects</button>
+      <button class="close-x" onclick="closeDetail()">✕</button>
+    </div>
+    <div id="det-body"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+
+<!-- ALL PROJECTS -->
+<div class="all-overlay" id="all-overlay">
+  <div class="all-head">
+    <h2>All Projects</h2>
+    <button class="close-x" onclick="closeAll()">✕</button>
+  </div>
+  <div class="all-body"><div class="all-grid" id="all-grid"></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL='https://bakpyrlvcvzokqrirgel.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJha3B5cmx2Y3Z6b2txcmlyZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NjA0MTUsImV4cCI6MjA5MDQzNjQxNX0.8SKCbEWCxpQTHZE0IbUD2MWchAyc7kQjzUTwlQIPHdA';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
+let D={name:'Zael Voss',role:'Web Developer ✦',roleTag:'Web Developer · UI Designer · Creative Coder',bio:"Hey! I'm Zael — a self-taught web developer who builds things just because it's fun.",email:'zael@email.com',contactSub:"Always down for fun side projects, collabs, or just talking about cool websites.",avatarImg:'',aboutImg:'',stats:['0','∞','100%'],skills:['HTML','CSS','JavaScript','React','Node.js','Figma','Git'],socials:[],services:[],projects:[],
+  displayName:'Zael Voss',nameInitials:'Z.V',heroLine1:'Zael',heroLine2:'',heroLine3:'Voss.'};
+
+async function loadData(){
+  try{
+    const [{data:profile},{data:projects},{data:services}]=await Promise.all([
+      sb.from('profile').select('*').eq('id',1).single(),
+      sb.from('projects').select('*').order('sort_order'),
+      sb.from('services').select('*').order('sort_order')
+    ]);
+    if(profile){
+      D.name=profile.name||D.name; D.role=profile.role||D.role; D.roleTag=profile.role_tag||D.roleTag;
+      D.bio=profile.bio||D.bio; D.email=profile.email||D.email; D.contactSub=profile.contact_sub||D.contactSub;
+      D.avatarImg=profile.avatar_url||''; D.aboutImg=profile.about_img_url||'';
+      D.stats=[profile.stat1||'0',profile.stat2||'∞',profile.stat3||'100%'];
+      D.skills=Array.isArray(profile.skills)?profile.skills:(profile.skills||'').split(',').map(s=>s.trim()).filter(Boolean);
+      D.socials=Array.isArray(profile.socials)?profile.socials:[];
+      // Name display fields — use dedicated columns; auto-derive from profile.name if empty
+      const rawName=profile.display_name||profile.name||D.displayName;
+      D.displayName=rawName;
+      const _np=rawName.split(' ').filter(Boolean);
+      D.nameInitials=profile.name_initials||(_np.map(w=>w[0].toUpperCase()).join('.'));
+      if(profile.hero_name_line1){
+        D.heroLine1=profile.hero_name_line1;
+        D.heroLine2=profile.hero_name_line2||'';
+        D.heroLine3=profile.hero_name_line3||'';
+      } else {
+        if(_np.length===1){D.heroLine1='';D.heroLine2='';D.heroLine3=_np[0]+'.';}
+        else if(_np.length===2){D.heroLine1=_np[0];D.heroLine2='';D.heroLine3=_np[1]+'.';}
+        else{D.heroLine1=_np[0];D.heroLine2=_np.slice(1,-1).join(' ');D.heroLine3=_np[_np.length-1]+'.';}
+      }
+    }
+    if(projects) D.projects=projects.map(p=>({
+      id:p.id,name:p.name,desc:p.description,year:p.year,emoji:p.emoji,grad:p.gradient,
+      tags:Array.isArray(p.tags)?p.tags:[],features:Array.isArray(p.features)?p.features:[],
+      imgs:Array.isArray(p.images)?p.images:[],liveUrl:p.live_url,ghUrl:p.github_url,featured:!!p.featured,
+      status:p.status||'Completed',role:p.role||'Developer',duration:p.duration||'',
+      challenge:p.challenge||'',outcome:p.outcome||''
+    }));
+    if(services) D.services=services.map(s=>({name:s.name,desc:s.description,id:s.id}));
+    render();
+  }catch(e){console.warn('Supabase load failed',e);render();}
+}
+
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});},{threshold:.08});
+
+function render(){
+  // ── NAME everywhere ──
+  const displayN = D.displayName||D.name||'';
+  const initials = D.nameInitials || displayN.split(' ').filter(Boolean).map(w=>w[0]).join('.');
+  // Rebuild nav logo properly from initials string like "Z.V"
+  const parts = initials.split('.').filter(Boolean);
+  document.getElementById('nav-logo').innerHTML = parts.map((p,i)=> i<parts.length-1 ? p+'<span>.</span>' : p).join('');
+
+  // Hero big name
+  const l1 = D.heroLine1||'';
+  const l2 = D.heroLine2||'';
+  const l3 = D.heroLine3||'';
+  document.getElementById('hero-name-l1').textContent = l1;
+  const l2el = document.getElementById('hero-name-l2');
+  if(l2){l2el.textContent = l2; l2el.style.display='block';}
+  else{l2el.textContent=''; l2el.style.display='none';}
+  document.getElementById('hero-name-l3').textContent = l3;
+
+  // Avatar initial (first letter of display name)
+  document.getElementById('avatar-txt').textContent = (displayN||'?')[0].toUpperCase();
+
+  // Profile card name
+  document.getElementById('profile-name').textContent = displayN;
+
+  // Footer logo: "Zael. Voss" style
+  const nameParts = displayN.split(' ').filter(Boolean);
+  document.getElementById('footer-logo').innerHTML = nameParts.map((p,i)=> i<nameParts.length-1 ? p+'<span>.</span> ' : p).join('');
+
+  // Page title
+  document.getElementById('page-title').textContent = (displayN||'Portfolio') + ' — Web Developer';
+
+  // ── REST OF RENDER ──
+  document.getElementById('hero-role').textContent=D.role;
+  document.getElementById('hero-desc').textContent=D.bio.split('. ')[0]+'.';
+  document.getElementById('profile-role-tag').textContent=D.roleTag;
+  const total=D.projects.length;
+  document.getElementById('s1').textContent=total>0?total+'+':D.stats[0];
+  document.getElementById('s2').textContent=D.stats[1]||'∞';
+  document.getElementById('s3').textContent=D.stats[2]||'100%';
+  const ai=document.getElementById('avatar-img'),at=document.getElementById('avatar-txt');
+  if(D.avatarImg){ai.src=D.avatarImg;ai.style.display='block';at.style.display='none';}
+  else{ai.style.display='none';at.style.display='block';}
+  const aimg=document.getElementById('about-img'),aem=document.getElementById('about-emoji');
+  if(D.aboutImg){aimg.src=D.aboutImg;aimg.style.display='block';aem.style.display='none';}
+  else{aimg.style.display='none';aem.style.display='block';}
+  document.getElementById('about-bio').textContent=D.bio;
+  document.getElementById('contact-sub').textContent=D.contactSub;
+  document.getElementById('skills-chips').innerHTML=D.skills.map(s=>`<span class="chip">${s}</span>`).join('');
+  document.getElementById('socials-row').innerHTML=D.socials.map(s=>`<a href="${s.url}" class="s-pill" target="_blank">${s.icon} ${s.label}</a>`).join('');
+  document.getElementById('services-list').innerHTML=D.services.length?D.services.map(s=>`<div class="svc-row reveal"><div class="svc-name">${s.name}</div><div class="svc-right"><p class="svc-desc">${s.desc}</p><div class="svc-arrow">↗</div></div></div>`).join(''):'';
+  const feat=D.projects.filter(p=>p.featured)[0];
+  const rest=D.projects.filter(p=>!p.featured).slice(0,3);
+  const show=feat?[feat,...rest].slice(0,4):D.projects.slice(0,4);
+  document.getElementById('proj-grid').innerHTML=show.map((p,i)=>pCard(p,i===0&&!!feat)).join('');
+  document.getElementById('all-grid').innerHTML=D.projects.map(p=>pCard(p,false)).join('');
+  document.querySelectorAll('.reveal:not(.vis)').forEach(el=>obs.observe(el));
+}
+
+function pCard(p,feat){
+  return `<div class="proj-card${feat?' featured':''} reveal">
+    <div class="proj-thumb" style="background:${p.grad||'#1a1a1a'}">
+      ${p.imgs&&p.imgs[0]?`<img src="${p.imgs[0]}" style="width:100%;height:100%;object-fit:cover"/>`:`<span>${p.emoji||'🖥'}</span>`}
+      <div class="proj-overlay"><button class="view-proj-btn" onclick="openDetail(${p.id})">View project →</button></div>
+    </div>
+    <div class="proj-body">
+      <div class="proj-tags">${feat?'<span class="ptag hot">Featured</span>':''} ${p.tags.map(t=>`<span class="ptag">${t}</span>`).join('')}</div>
+      <div class="proj-name">${p.name}</div><div class="proj-desc">${p.desc}</div>
+    </div>
+    <div class="proj-foot"><span class="proj-year">${p.year}</span><span class="proj-link" onclick="openDetail(${p.id})" style="cursor:pointer">View details ↗</span></div>
+  </div>`;
+}
+
+function openDetail(id){
+  const p=D.projects.find(x=>x.id===id);if(!p)return;
+  const ni=D.projects.indexOf(p);
+  const prev=D.projects[(ni-1+D.projects.length)%D.projects.length];
+  const next=D.projects[(ni+1)%D.projects.length];
+  const featHTML=p.features&&p.features.length?`<div class="dp-section-title">What I Built</div><div class="dp-features">${p.features.map((f,i)=>`<div class="feat-item"><div class="feat-num">0${i+1}</div><div class="feat-body"><strong>${f.t}</strong><small>${f.d}</small></div></div>`).join('')}</div>`:'';
+  const scrHTML=p.imgs&&p.imgs.length>1?`<div class="dp-section-title">Screenshots</div><div class="dp-imgs-grid">${p.imgs.slice(1).map(img=>`<div class="d-img-sm" onclick="openLightbox('${img}')"><img src="${img}"/></div>`).join('')}</div>`:'';
+  const chalHTML=p.challenge?`<div class="dp-section-title">The Challenge</div><p style="font-size:15px;line-height:1.8;color:var(--muted2);margin-bottom:10px">${p.challenge}</p>`:'';
+  const outHTML=p.outcome?`<div class="dp-section-title">Outcome</div><p style="font-size:15px;line-height:1.8;color:var(--muted2);margin-bottom:10px">${p.outcome}</p>`:'';
+  document.getElementById('det-body').innerHTML=`
+    <div class="dp-hero" style="background:${p.grad||'#1a1a1a'}">
+      ${p.imgs&&p.imgs[0]?`<img src="${p.imgs[0]}" alt="${p.name}"/>`:`<span>${p.emoji||'🖥'}</span>`}
+      <div class="dp-hero-overlay"></div>
+      <div class="dp-hero-chips">${p.tags.map(t=>`<span class="ptag" style="background:rgba(0,0,0,.6);backdrop-filter:blur(6px)">${t}</span>`).join('')}</div>
+    </div>
+    <div class="dp-layout">
+      <div class="dp-main">
+        <div class="dp-title">${p.name}</div>
+        <div class="dp-meta">
+          <span class="dp-meta-chip">${p.year}</span>
+          ${p.status?`<span class="dp-meta-chip">${p.status}</span>`:''}
+          ${p.role?`<span class="dp-meta-chip">${p.role}</span>`:''}
+          ${p.duration?`<span class="dp-meta-chip">⏱ ${p.duration}</span>`:''}
+        </div>
+        <p class="dp-desc">${p.desc}</p>
+        ${chalHTML}${featHTML}${outHTML}${scrHTML}
+        <div class="dp-section-title">Built With</div>
+        <div class="dp-tech">${p.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+        <div class="dp-nav">
+          <div class="dp-nav-card" onclick="closeDetail();setTimeout(()=>openDetail(${prev.id}),100)">
+            <div class="dp-nav-lbl">← Previous</div><div class="dp-nav-name">${prev.name}</div>
+          </div>
+          <div class="dp-nav-card" onclick="closeDetail();setTimeout(()=>openDetail(${next.id}),100)">
+            <div class="dp-nav-lbl">Next →</div><div class="dp-nav-name">${next.name}</div>
+          </div>
+        </div>
+      </div>
+      <div class="dp-sidebar">
+        <div class="dp-actions">
+          ${p.liveUrl&&p.liveUrl!=='#'?`<a href="${p.liveUrl}" class="dp-action-btn primary" target="_blank">Live Demo ↗</a>`:''}
+          ${p.ghUrl&&p.ghUrl!=='#'?`<a href="${p.ghUrl}" class="dp-action-btn secondary" target="_blank">GitHub →</a>`:''}
+        </div>
+        <div class="dp-info-card">
+          <div class="dp-info-row"><span class="label">Year</span><span class="val">${p.year}</span></div>
+          ${p.status?`<div class="dp-info-row"><span class="label">Status</span><span class="val" style="color:var(--accent3)">${p.status}</span></div>`:''}
+          ${p.role?`<div class="dp-info-row"><span class="label">My Role</span><span class="val">${p.role}</span></div>`:''}
+          ${p.duration?`<div class="dp-info-row"><span class="label">Duration</span><span class="val">${p.duration}</span></div>`:''}
+          <div class="dp-info-row"><span class="label">Tech</span><span class="val">${p.tags[0]||'Web'}</span></div>
+        </div>
+        ${p.imgs&&p.imgs[0]?`<div style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:zoom-in" onclick="openLightbox('${p.imgs[0]}')"><img src="${p.imgs[0]}" style="width:100%;aspect-ratio:16/9;object-fit:cover"/></div>`:''}
+      </div>
+    </div>`;
+  const overlay=document.getElementById('det-overlay');
+  overlay.classList.add('open');overlay.scrollTop=0;document.body.style.overflow='hidden';
+}
+function closeDetail(){document.getElementById('det-overlay').classList.remove('open');document.body.style.overflow='';}
+function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('lightbox').classList.add('open');}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+function openAll(){document.getElementById('all-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeAll(){document.getElementById('all-overlay').classList.remove('open');document.body.style.overflow='';}
+function toggleForm(){const w=document.getElementById('cf-wrap');w.style.display=w.style.display==='none'?'block':'none';}
+
+async function submitContact(){
+  const name=document.getElementById('cf-name')?.value?.trim();
+  const email=document.getElementById('cf-email')?.value?.trim();
+  const message=document.getElementById('cf-msg')?.value?.trim();
+  if(!name||!email||!message){toast('Please fill all fields!');return;}
+  const btn=document.getElementById('cf-btn');
+  if(btn){btn.textContent='Sending...';btn.disabled=true;}
+  try{
+    const{error}=await sb.from('contact_messages').insert({name,email,message,read:false,created_at:new Date().toISOString()});
+    if(!error){
+      toast('Message sent! 🎉');
+      ['cf-name','cf-email','cf-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+      document.getElementById('cf-wrap').style.display='none';
+    } else toast('Error: '+error.message);
+  }catch(e){toast('Could not send message');}
+  if(btn){btn.textContent='Send message ↗';btn.disabled=false;}
+}
+
+function toast(msg){
+  const t=document.createElement('div');t.textContent=msg;
+  Object.assign(t.style,{position:'fixed',bottom:'28px',left:'50%',transform:'translateX(-50%)',background:'var(--accent)',color:'#fff',padding:'10px 24px',borderRadius:'100px',fontSize:'13px',fontWeight:'500',zIndex:'9999',fontFamily:"'DM Sans',sans-serif",boxShadow:'0 4px 20px rgba(255,77,0,.4)',whiteSpace:'nowrap'});
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2400);
+}
+
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function animR(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR);})();
+document.querySelectorAll('button,a,.proj-card,.stat,.svc-row').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='rgba(255,77,0,.6)';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='rgba(255,77,0,.35)';});
+});
+
+render();loadData();
+</script>
+</body>
+</html>
